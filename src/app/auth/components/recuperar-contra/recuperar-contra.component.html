@@ -1,0 +1,64 @@
+<div class="container">
+    <h1 class="text-center pt-5">
+        <strong>Recuperar Contraseña</strong>
+    </h1>
+    <div class="row">
+
+        <div class="col-md-2 col-sm-12 pt-5"></div>
+
+        <div
+            class="col-md-8 col-sm-12 pt-5"
+            align="center"
+        >
+            <!-- form -->
+            <div class="row">
+                <div class="col-md-12">
+                    <form
+                        nz-form
+                        [nzAutoTips]="autoTips"
+                        [formGroup]="validateForm"
+                        (ngSubmit)="submitForm(validateForm.value)"
+                    >
+
+                        <nz-form-item>
+                            <nz-form-label
+                                [nzSpan]="7"
+                                nzRequired
+                            >
+                                Correo Electrónico
+                            </nz-form-label>
+                            <br>
+                            <nz-form-control [nzSpan]="12">
+                                <input
+                                    nz-input
+                                    formControlName="email"
+                                    placeholder="Correo Electrónico "
+                                    type="email"
+                                >
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-control
+                                [nzOffset]="7"
+                                [nzSpan]="1"
+                            >
+                                <button
+                                    nz-button
+                                    nzType="primary"
+                                    pull-left
+                                    [disabled]="!validateForm.valid"
+                                >
+                                    Enviar
+                                </button>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </form>
+                </div>
+            </div>
+
+            <!-- form ^ -->
+        </div>
+        <div class="col-md-2 col-sm-12 pt-5"></div>
+    </div>
+</div>

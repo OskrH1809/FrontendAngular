@@ -1,0 +1,40 @@
+<div class="container esp">
+
+    <div class="row ">
+        <div
+            class="col-md-4 mb-5 col-sm-6 col-12  "
+            *ngFor="let mes of listaMeses"
+        >
+
+
+
+                <mat-card class="example-card sombreado">
+                    <mat-card-header *ngIf="mes.id==mesActual" class="mat-card-header1">
+                      <a class="letra" routerLink="/servicios/{{mes.id}}">
+                        <mat-card-title class="titulo1">{{mes.id}}</mat-card-title>
+                        <mat-card-title class="titulo2">{{mes.Mes}}</mat-card-title>
+                      </a>
+
+
+                    </mat-card-header>
+
+                    <mat-card-header *ngIf="mes.id>mesActual" class="mat-card-header2">
+                      <a class="letra" (click)="alerta()">
+                        <mat-card-title class="titulo1">{{mes.id}}</mat-card-title>
+                        <mat-card-title class="titulo2">{{mes.Mes}}</mat-card-title>
+                      </a>
+                  </mat-card-header>
+                  <mat-card-header *ngIf="mes.id<mesActual" class="mat-card-header3">
+                    <a class="letra" routerLink="/servicios/{{mes.id}}">
+                      <mat-card-title class="titulo1">{{mes.id}}</mat-card-title>
+                      <mat-card-title class="titulo2">{{mes.Mes}}</mat-card-title>
+                    </a>
+                </mat-card-header>
+                </mat-card>
+
+
+
+        </div>
+
+    </div>
+</div>

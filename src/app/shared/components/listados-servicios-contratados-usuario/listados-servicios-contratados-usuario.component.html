@@ -1,0 +1,274 @@
+<div class="container espacio">
+
+  <h3
+            class="titulo text-center"
+            *ngIf="cliente"
+        >
+            Listado de servicios de
+            <span style="color: #08c;">
+                <strong>{{cliente}}</strong>
+            </span>
+        </h3>
+        <h1
+            class="text-center"
+            *ngIf="!cliente"
+        >
+            El usuario aun no ha contratado servicios
+        </h1>
+    <div class="row">
+      <div class="col-md-3 col-sm-12 espacio-estado" >
+        <h5>Seleccionar Estado</h5>
+
+        <nz-radio-group [(ngModel)]="radioValue"  (ngModelChange)="filtro($event)" >
+        <label nz-radio  style="color: red;" nzValue="1" >Sin pagar</label>
+        <label nz-radio style="color: rgb(251, 102, 9);" nzValue="2">Pendiente de aprobar</label>
+        <label nz-radio style="color: #1b5b9b;" nzValue="3">Aprobado</label>
+
+      </nz-radio-group>
+      </div>
+        <div class="col-md-9 pt-5 col-sm-12">
+
+
+
+            <br>
+            <br>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <button
+                        nz-button
+                        nzType="primary"
+                        (click)="showModalFormulariof()"
+                    >
+                        Contratar nuevo servicio
+                    </button>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <button
+                        nz-button
+                        class="pull-right"
+                        [nzType]="'primary'"
+                        (click)="backClicked()"
+                    >
+                        <span>Regresar</span>
+                    </button>
+
+                </div>
+            </div>
+            <hr>
+            <nz-table
+                #editRowTable
+                nzBordered
+                [nzData]="listOfData"
+            >
+                <thead *ngFor="let data of editRowTable.data">
+                    <tr *ngIf="data.subido!=mesActual">
+                        <th nzWidth="5%">Id</th>
+                        <th nzWidth="30%">Servicios</th>
+                        <th nzWidth="20%">Precio</th>
+                        <th nzWidth="30%">Tareas del servicio</th>
+                        <th nzWidth="50%">Periodo de Pago</th>
+                        <th>Activar/desactivar</th>
+                    </tr>
+                    <tr *ngIf="data.subido==mesActual">
+                      <th nzWidth="5%">Id</th>
+                      <th nzWidth="30%">Servicios</th>
+                      <th nzWidth="20%">Precio</th>
+                      <th nzWidth="30%">Tareas del servicio</th>
+                      <th nzWidth="50%">Comprobante de pago</th>
+                      <th nzWidth="50%">Periodo de Pago</th>
+                      <th>Activar/desactivar</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let data of editRowTable.data"
+                        class="editable-row">
+                    <tr
+
+                        *ngIf="data.subido==mesActual"
+                    >
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.price }}</td>
+                        <td class="text-center">
+
+                            <a
+                                routerLink="/gestiontareas/{{mesActual}}/{{data.name}}/{{data.user_id}}/{{data.servicio_id}}"
+                                routerLinkActive="true"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Ver tareas del servicio:  {{data.servicio}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: #08c;"
+                                        nz-icon
+                                        nzType="eye"
+                                        nzTheme="outline"
+                                    ></i>
+                                </span>
+                            </a>
+                        </td>
+
+                        <td class="text-center">
+                          <img
+                          nz-image
+                          width="100px"
+                          class="imagen-pago text-center"
+                          height="100px"
+                          nzSrc="{{baseUrl}}/{{data.documento_ruta}}"
+                          alt="{{baseUrl}}/{{data.documento_ruta}}"
+                      >
+
+                        </td>
+                        <td *ngIf="data.periodo_pago=='1'">
+                          Inicio de mes
+                      </td>
+                      <td *ngIf="data.periodo_pago=='2'">
+                          Fin de mes
+                      </td>
+                        <td class="text-center">
+                            <a
+                                *ngIf="data.servicio_contratado_activo=='1'"
+                                nz-popconfirm
+                                nzPopconfirmTitle="Seguro que desea desactivar el servicio de {{data.name}}?"
+                                (nzOnConfirm)="desactivarServicioContratado(data.id,data.name)"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Desactivar el servicio de {{data.name}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: rgb(30,150,210);"
+                                        nz-icon
+                                        nzType="check-circle"
+                                        nzTheme="outline"
+                                        [nzTwotoneColor]="red"
+                                    ></i>
+                                </span>
+                            </a>
+                            <!--  -->
+                            <a
+                                *ngIf="data.servicio_contratado_activo=='0'"
+                                nz-popconfirm
+                                nzPopconfirmTitle="Seguro que desea Activar el servicio de {{data.name}}?"
+                                (nzOnConfirm)="activarServicioContratado(data.id,data.name)"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Activar el servicio de {{data.name}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: rgb(241, 12, 12);"
+                                        nz-icon
+                                        nzType="close-circle"
+                                        nzTheme="outline"
+                                        [nzTwotoneColor]="red"
+                                    ></i>
+                                </span>
+                            </a>
+                        </td>
+
+                    </tr>
+                    <tr
+
+                        *ngIf="data.subido!=mesActual"
+                    >
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.price }}</td>
+                        <td class="text-center">
+
+                            <a
+                                routerLink="/gestiontareas/{{mesActual}}/{{data.name}}/{{data.user_id}}/{{data.servicio_id}}"
+                                routerLinkActive="true"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Ver tareas del servicio:  {{data.servicio}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: #08c;"
+                                        nz-icon
+                                        nzType="eye"
+                                        nzTheme="outline"
+                                    ></i>
+                                </span>
+                            </a>
+                        </td>
+
+
+                        <td *ngIf="data.periodo_pago=='1'">
+                          Inicio de mes
+                      </td>
+                      <td *ngIf="data.periodo_pago=='2'">
+                          Fin de mes
+                      </td>
+                        <td class="text-center">
+                            <a
+                                *ngIf="data.servicio_contratado_activo=='1'"
+                                nz-popconfirm
+                                nzPopconfirmTitle="Seguro que desea desactivar el servicio de {{data.name}}?"
+                                (nzOnConfirm)="desactivarServicioContratado(data.id,data.name)"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Desactivar el servicio de {{data.name}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: rgb(30,150,210);"
+                                        nz-icon
+                                        nzType="check-circle"
+                                        nzTheme="outline"
+                                        [nzTwotoneColor]="red"
+                                    ></i>
+                                </span>
+                            </a>
+                            <!--  -->
+                            <a
+                                *ngIf="data.servicio_contratado_activo=='0'"
+                                nz-popconfirm
+                                nzPopconfirmTitle="Seguro que desea Activar el servicio de {{data.name}}?"
+                                (nzOnConfirm)="activarServicioContratado(data.id,data.name)"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Activar el servicio de {{data.name}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: rgb(241, 12, 12);"
+                                        nz-icon
+                                        nzType="close-circle"
+                                        nzTheme="outline"
+                                        [nzTwotoneColor]="red"
+                                    ></i>
+                                </span>
+                            </a>
+                        </td>
+
+                    </tr>
+                </tbody>
+
+
+
+
+
+            </nz-table>
+            <nz-modal
+            [(nzVisible)]="isVisibleFormulariof"
+            [nzStyle]="{ top: '20px' }"
+            nzTitle
+            (nzOnCancel)="handleCancelFormulariof()"
+            (nzOnOk)="handleOkFormulariof()"
+        >
+            <ng-container *nzModalContent>
+                <app-contratar-servicios (contratar)="agregarServicio($event)"></app-contratar-servicios>
+
+            </ng-container>
+        </nz-modal>
+            <br>
+
+        </div>
+
+    </div>
+</div>
+`

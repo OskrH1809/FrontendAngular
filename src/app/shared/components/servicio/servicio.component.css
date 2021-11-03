@@ -1,0 +1,155 @@
+.header-card{
+  background-color: #3d9efe;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  font-weight: 700;
+  color: black;
+
+
+  }
+
+
+
+  .custom-select{
+    font-size: 16px;
+  }
+
+  .container{
+    padding: 5px;
+  }
+
+
+  .example-card{
+    box-shadow: 1px 1px 1px 2px rgb(132, 133, 138);
+
+
+  }
+
+
+  .body-card{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  padding: 3px;
+  border: 1px solid rgb(197, 195, 195);
+  }
+
+
+  .mat-form-field + .mat-form-field {
+    margin-left: 8  px;
+  }
+
+.mat-card-header1{
+background-color: #3d9efe;
+padding: 13px;
+border-radius: 6px;
+padding-top: 5px;
+}
+.mat-card-header1:hover{
+  background-color: #1b5b9b;
+  padding: 13px;
+  border-radius: 6px;
+  padding-top: 5px;
+  }
+.mat-card-header2{
+  background-color: red;
+  padding: 13px;
+  border-radius: 6px;
+  padding-top: 5px;
+  }
+
+  .mat-card-header4{
+    background-color: rgb(204, 204, 204);
+    padding: 13px;
+    border-radius: 6px;
+    padding-top: 5px;
+    }
+
+.mat-card-header3{
+    background-color: rgb(251, 102, 9);
+    padding: 13px;
+    border-radius: 6px;
+    padding-top: 5px;
+  }
+
+/* .mat-card{
+  margin-bottom: 20px;
+  width: 100%;
+} */
+
+.titulo1{
+  font-size: 2rem;
+  padding-top: 5px;
+  color: black;
+}
+
+
+.mat-buttonn{
+  transition: 0.2s;
+  width: 100%;
+  font-size:medium;
+  padding-right: 3px !important;
+  color: #ffffff !important;
+
+
+}
+
+.mat-buttonn:hover{
+background-color: #3d9efe;
+transition: 0.2s;
+}
+
+
+.icons{
+  cursor: pointer;
+}
+
+.table-color{
+  background-color: #3d9efe;
+  color: white;
+}
+
+.image{
+  width: 100%;
+  height: 100%;
+  float:left ;
+
+}
+
+
+
+.espacio{
+
+  padding-bottom:200px;
+}
+
+
+.img{
+  width: 50%;
+
+  border: 3px solid #ddd;
+  border-radius: 4px;
+}
+
+.input-file{
+  width: 100% !important;
+}
+
+
+.fuente{
+  font-size:x-small !important;
+}
+
+.imagen-pago{
+  align-items: center;
+  width: 70% !important;
+  align-content: center !important;
+  float:right;
+  padding-right: 10% ;
+  height: 80%;
+}
+.imagenContenedor{
+  width: 100% !important;
+
+}

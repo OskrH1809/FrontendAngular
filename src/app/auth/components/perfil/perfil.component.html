@@ -1,0 +1,253 @@
+<div class="row estilo">
+
+    <div class="col-md-3 col-sm-12 pt-5"></div>
+    <div class="col-md-7 col-sm-12 pt-5 config ">
+        <h1 class="pl-5 pb-5">Información de perfil</h1>
+        <form
+            nz-form
+            [formGroup]="validateForm"
+            (ngSubmit)="submitForm(validateForm.value)"
+        >
+
+            <nz-form-item>
+                <nz-form-label
+                    class="text-left pl-4"
+                    [nzSpan]="8"
+                    nzRequired
+                >
+                    Usuario
+                </nz-form-label>
+                <nz-form-control [nzSpan]="12">
+
+                    <nz-input-group nzPrefixIcon="user">
+                        <input
+                            nz-input
+                            type="text"
+                            [(ngModel)]="user"
+                            [disabled]="disableInput"
+                            formControlName="email"
+                        >
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label
+                    class="text-left pl-4"
+                    [nzSpan]="8"
+                    nzRequired
+                >
+                    Contraseña Actual
+                </nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-input-group
+                        nzPrefixIcon="lock"
+                        [nzSuffix]="suffixTemplate"
+                        nzSize="large"
+                    >
+                        <input
+                            nz-input
+                            [type]="!isPasswordVisible ? 'text' : 'password'"
+                            formControlName="passwordcurrent"
+                            placeholder="Ingrese su contraseña actual"
+                        >
+                    </nz-input-group>
+                    <ng-template #suffixTemplate>
+                        <i
+                            nz-icon
+                            [nzType]="isPasswordVisible ? 'eye-invisible' : 'eye'"
+                            (click)="isPasswordVisible = !isPasswordVisible"
+                        ></i>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label
+                    class="text-left pl-4"
+                    [nzSpan]="8"
+                    nzRequired
+                >
+                    Nueva Contraseña
+                </nz-form-label>
+                <nz-form-control
+                    [nzSpan]="12"
+                    nzDisableAutoTips
+                    nzErrorTip="Please input your password!"
+                >
+
+                    <nz-input-group
+                        nzPrefixIcon="lock"
+                        [nzSuffix]="suffixTemplate"
+                        nzSize="large"
+                    >
+                        <input
+                            nz-input
+                            [type]="!isPasswordVisible ? 'text' : 'password'"
+                            formControlName="password"
+                            placeholder="Ingrese su contraseña"
+                            (ngModelChange)="validateConfirmPassword()"
+                        >
+                    </nz-input-group>
+
+                    <ng-template #suffixTemplate>
+                        <i
+                            nz-icon
+                            [nzType]="isPasswordVisible ? 'eye-invisible' : 'eye'"
+                            (click)="isPasswordVisible = !isPasswordVisible"
+                        ></i>
+                    </ng-template>
+
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label
+                    class="text-left pl-4"
+                    [nzSpan]="8"
+                    nzRequired
+                >
+                    Confirmar contraseña
+                </nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-input-group
+                        nzPrefixIcon="lock"
+                        [nzSuffix]="suffixTemplate"
+                        nzSize="large"
+                    >
+                        <input
+                            nz-input
+                            [type]="!isPasswordVisible ? 'text' : 'password'"
+                            formControlName="confirm"
+                            placeholder="Confirme su contraseña"
+                        >
+
+                    </nz-input-group>
+
+                    <ng-template #suffixTemplate>
+                        <i
+                            nz-icon
+                            [nzType]="isPasswordVisible ? 'eye-invisible' : 'eye'"
+                            (click)="isPasswordVisible = !isPasswordVisible"
+                        ></i>
+                    </ng-template>
+
+                </nz-form-control>
+                <ng-template
+                    #passwordErrorTpl
+                    let-control
+                >
+                    <ng-container *ngIf="control.hasError('required')">Please confirm your password!</ng-container>
+                    <ng-container *ngIf="control.hasError('confirm')">Password is inconsistent!</ng-container>
+                </ng-template>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-control
+                    [nzOffset]="8"
+                    [nzSpan]="12"
+                >
+                    <button
+                        nz-button
+                        [disabled]="!validateForm.valid"
+                        nzType="primary"
+                    >
+                        Actualizar información de perfil
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+
+        </form>
+
+        <hr>
+
+        <h3 class="pl-5 pb-5">Información de usuario</h3>
+        <form
+            nz-form
+            [formGroup]="validateForm2"
+            (ngSubmit)="submitForm2(validateForm2.value)"
+        >
+
+            <nz-form-item>
+                <nz-form-label
+                    class="text-left pl-4"
+                    [nzSpan]="8"
+                    nzRequired
+                >
+                    Cuenta de banco
+                </nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-input-group nzPrefixIcon="bank">
+                        <input
+                            nz-input
+                            type="text"
+                            [(ngModel)]="cuentaBanco"
+                            formControlName="cuentaBanco"
+                            placeholder="Cuenta de banco"
+                        >
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label
+                    class="text-left pl-4"
+                    [nzSpan]="8"
+                    nzRequired
+                >
+                    Teléfono
+                </nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-input-group nzPrefixIcon="phone">
+                        <input
+                            nz-input
+                            type="text"
+                            [(ngModel)]="telefono"
+                            formControlName="telefono"
+                            placeholder="Teléfono"
+                        >
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label
+                    class="text-left pl-4"
+                    [nzSpan]="8"
+                    nzRequired
+                >
+                    direccion
+                </nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group nzPrefixIcon="home">
+                        <input
+                            nz-input
+                            type="text"
+                            [(ngModel)]="direccion"
+                            formControlName="direccion"
+                            placeholder="Dirección"
+                        >
+
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-control
+                    [nzOffset]="8"
+                    [nzSpan]="12"
+                >
+                    <button
+                        nz-button
+                        [disabled]="!validateForm2.valid"
+                        nzType="primary"
+                    >
+                        Actualizar información de usuario
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+
+        </form>
+
+    </div>
+    <div class="col-md-2 col-sm-12 pt-5"></div>
+</div>

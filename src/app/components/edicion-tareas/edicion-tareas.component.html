@@ -1,0 +1,61 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="demoReactiveForm">
+  <!-- <h3>User profile form</h3> -->
+
+  <div>
+    <label for="titulo">Titulo</label>
+    <input class="form-control" formControlName="titulo" type="text" name="titulo" id="titulo">
+  </div>
+
+  <label class="pt-2" for="descripcion">Descripción</label>
+  <ckeditor
+
+    formControlName="descripcion"
+    [editor]="Editor"
+    id="descripcion"
+    class="ck-editor__editable_inline"
+    name="descripcion">
+
+  </ckeditor>
+    <!-- file -->
+    <div class="form-group">
+
+      <label class="pt-4" for="file">Documento</label>
+
+      <input
+
+          formControlName="file"
+
+          id="file"
+
+          type="file"
+
+          class="form-control"
+
+          (change)="onFileChange($event)">
+
+
+
+  </div>
+    <!-- end File -->
+  <!-- <p *ngIf="description && description.dirty" class="alert">Description is "dirty".</p>
+  <p *ngIf="description && description.touched" class="alert">Description has been "touched".</p> -->
+
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="row">
+        <div class="col-md-2 pr-5 col-sm-12">
+          <p><button class="btn btn-primary" type="submit"  >Enviar</button> </p>
+
+        </div>
+        <div class="col-md-10 pl-5 col-sm-12">
+          <p><button class="btn btn-primary" type="reset" (click)="reset()">Limpiar</button></p>
+
+        </div>
+      </div>
+        <button (click)="datosss()" type="button" class="btn btn-danger"> datos</button>
+    </div>
+    <div class="col-md-6 col-sm-12">
+
+    </div>
+  </div>
+</form>

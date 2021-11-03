@@ -1,0 +1,146 @@
+<div class="container-fluid top">
+  <h3 class="text-center">Tarea del servicio de <span style="color: black;">{{servicio}}</span> del usuario <span style="color: black;">{{user}}</span></h3>
+  <div class="row header">
+
+    <div class="col-md-6 col-sm-12">
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <button
+            nz-button
+            class="pull-right"
+            [nzType]="'primary'"
+            (click)="backClicked()"
+        >
+            <span>Regresar</span>
+        </button>
+    </div>
+  </div>
+  <div class="row ">
+
+        <div
+            *ngFor="let data of tarea"
+            class="col-md-8 col-sm-12 conversacion"
+        >
+            <h1>{{data.titulo}}</h1>
+            <br>
+            <div
+                class="text-left descripcion"
+                [innerHTML]="data.descripcion"
+            ></div>
+            <br>
+            <h4>documentos</h4>
+            <div class="row ">
+                <div *ngFor="let documento of documentos; let i=index"  class="col-md-4 mb-5 col-sm-6 col-12 ">
+                  <div class="estilo">
+                      <a
+                          class="letra"
+                          href="{{documento.archivo}}"
+                      >
+                          <img
+                              class="documento"
+                              src="assets/img/pdf.png"
+                              alt
+                          >
+                          Documento
+
+                          <span class="letra">{{i+1}}</span>
+                      </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 mb-5">
+
+
+            <div class="container conversacion2 pt-4 pb-4">
+
+            <div
+                class="long-div"
+                #divTarget
+
+            >
+                <div class="long-div-inner">
+
+                <div
+                *ngFor="let comentario of comentarios; let i=index"
+                class="row"
+            >
+
+                <div class="col-md-1 col-sm-12 mb-2 "></div>
+                <div class="col-md-10 col-sm-12 mb-2 mensaje">
+                    <div
+                        *ngIf="comentario.user!=usuario"
+                        class="mb-5"
+                    >
+                        <p class="usuario-receiver">{{comentario.user}}</p>
+                    </div>
+                    <div
+                        *ngIf="comentario.user==usuario"
+                        class="mb-5"
+                    >
+                        <p class="usuario-emitter">{{comentario.user}}</p>
+                    </div>
+                    <br>
+                    <div>
+                        <p class="texto">{{comentario.text}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <p>{{comentario.createAt}}</p>
+                        </div>
+                        <div class="col-md-6 col-sm-12 ">
+                            <i
+                                class="pull-right pr-2"
+                                nz-icon
+                                nzType="edit"
+                                nzTheme="outline"
+                            ></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-1 col-sm-12 mb-2 "></div>
+
+            </div>
+
+
+
+                </div>
+                <nz-back-top [nzTarget]="divTarget"></nz-back-top>
+            </div>
+            <div class="pt-4">
+              <nz-input-group
+                  nzSearch
+                  [nzAddOnAfter]="suffixIconButton"
+              >
+                  <input
+                  (keydown)="EnterSubmit($event)"
+                  class="float-left"
+                  nz-input
+                  placeholder="Comentario"
+                  [(ngModel)]="value"
+                  >
+              </nz-input-group>
+
+              <ng-template #suffixIconButton>
+                  <button
+                      nz-button
+                      nzType="primary"
+                      nzSearch
+                      (click)="postComentarios()"
+                  >
+                      <i
+                          nz-icon
+                          nzType="send"
+                          class="pb-2"
+                          nzTheme="outline"
+                      ></i>
+                  </button>
+              </ng-template>
+          </div>
+            </div>
+        </div>
+    </div>
+</div>

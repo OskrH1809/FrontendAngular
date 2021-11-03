@@ -1,0 +1,59 @@
+  .container-fluid{
+    padding: 5%;
+    padding-top: 5%;
+
+
+  }
+
+
+  .example-card{
+    box-shadow: 1px 1px 1px 2px rgb(61,158,254);
+    align-items: center;
+
+  }
+
+
+.mat-card-header{
+background-color: #3d9efe;
+border-radius: 6px;
+padding-top: 5px;
+}
+
+.mat-card-header:hover{
+  background-color: #1b5b9b;
+  border-radius: 6px;
+  padding-top: 5px;
+}
+
+
+.titulo1{
+  font-size:x-large;
+  padding-top: 5px;
+  color: black;
+}
+
+
+.titulo2{
+  color: black;
+  font-size:medium;
+
+}
+
+.mat-buttonn:hover{
+background-color: #3d9efe;
+transition: 0.2s;
+}
+
+
+[nz-icon] {
+  margin-right: 2px;
+  font-size: 24px;
+  position: relative;
+
+  bottom: 4px;
+}
+
+mat-card-title{
+margin-bottom: 0px;
+padding-bottom: 0px;
+}

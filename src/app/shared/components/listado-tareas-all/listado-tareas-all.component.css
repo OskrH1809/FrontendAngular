@@ -1,0 +1,49 @@
+.container-fluid{
+  padding: 5%;
+}
+
+[nz-radio] {
+  display: block;
+  height: 32px;
+
+  line-height: 32px;
+}
+
+.espacio{
+  padding-top: 5%;
+}
+
+nz-select {
+  width: 100%
+}
+
+nz-badge {
+
+  color: black;
+}
+nz-badge:hover {
+  background-color: #3d9efe;
+  color: black;
+}
+
+.head-example {
+  width: 42px;
+  height: 42px;
+  border-radius: 4px;
+  background: #eee;
+  text-align: center;
+  padding-top: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.head-example:hover {
+  width: 42px;
+  height: 42px;
+  border-radius: 4px;
+  background-color: #3d9efe;
+  text-align: center;
+  padding-top: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}

@@ -1,0 +1,74 @@
+<header id="header" class="header header-hide">
+  <div class="container">
+
+    <div id="logo" class="pull-left">
+      <h1><a href="#body" class="scrollto"><span></span>Servicios de soporte</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="#body"><img src="assets/img/logo.png" alt="" title="" /></a> -->
+    </div>
+
+    <nav *ngIf="verificarAcceso!=true" id="nav-menu-container">
+      <ul class="nav-menu">
+        <li class="menu-active"><a href="">Iniciar sesión</a></li>
+        <li class=""><a href="/registro">Registrarse</a></li>
+        <!-- <li> <a href="#" (click)="logout()">Logout </a> </li> -->
+      </ul>
+    </nav><!-- #nav-menu-container -->
+
+    <nav *ngIf="verificarAcceso==true && role=='ROLE_ADMIN'" id="nav-menu-container">
+      <ul class="nav-menu">
+
+        <li><a href="/panel">Panel</a></li>
+        <li><a href="/gestionservicios"> Gestión Servicios</a></li>
+        <li> <a href="/gestionclientes">Gestión Clientes</a> </li>
+        <!-- <li class="menu-active"><a href="">Login</a></li> -->
+
+        <li class="pl-5">
+          <a nz-dropdown [nzDropdownMenu]="menu">
+
+            <i nz-icon   style="font-size: 25px; color: rgb(30,150,210);" nzType="user" nzTheme="outline"></i>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <hr>
+              <li> <a style="color: black;" href="/perfil">{{username}}</a> </li>
+              <hr>
+              <li> <a style="color: black;" href="/registro">Registrar nuevo usuario</a> </li>
+              <hr>
+              <li class="text-center"> <a style="color: black;" (click)="logout()">Cerrar sesión</a> </li>
+                <hr>
+
+            </ul>
+          </nz-dropdown-menu>
+        </li>
+      </ul>
+
+    </nav><!-- #nav-menu-container -->
+
+    <nav *ngIf="verificarAcceso==true && role=='ROLE_CLIENT'" id="nav-menu-container">
+      <ul class="nav-menu">
+
+        <li><a href="/cards">Servicios</a></li>
+        <!-- <li class="menu-active"><a href="">Login</a></li> -->
+        <li class="pl-5">
+          <a nz-dropdown [nzDropdownMenu]="menu">
+
+            <i nz-icon   style="font-size: 25px; color: rgb(30,150,210);" nzType="user" nzTheme="outline"></i>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <hr>
+              <li> <a style="color: black;" href="/perfil">{{username}}</a> </li>
+              <hr>
+              <li class="text-center"> <a style="color: black;" (click)="logout()">Cerrar sesión</a> </li>
+                <hr>
+
+            </ul>
+          </nz-dropdown-menu>
+        </li>
+      </ul>
+
+    </nav><!-- #nav-menu-container -->
+
+  </div>
+</header><!-- #header -->

@@ -1,0 +1,752 @@
+<div class="container espacio">
+    <h1 class=" pt-5 pb-5 text-center">
+        <strong>Servicios del mes de {{Mes[id]}}</strong>
+    </h1>
+
+    <h4
+        *ngIf='bloqueadorInicioMes==true || bloqueadorFinMes==true || bloqueadorMesAnterior==true'
+        style="color: red;"
+        class="pt-3 text-center"
+    >
+        {{alerta}}
+    </h4>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <button
+                [disabled]="id!=mesActual || bloqueadorInicioMes==true || bloqueadorFinMes==true || bloqueadorMesAnterior==true"
+                (click)="showModal()"
+                nz-button
+                [nzType]="'primary'"
+            >
+                <span>Solicitar nuevos servicios</span>
+            </button>
+            <nz-modal
+                [(nzVisible)]="isVisible"
+                nzTitle="Servicios de soporte"
+                (nzOnCancel)="handleCancel()"
+                (nzOnOk)="handleOk()"
+            >
+                <ng-container *nzModalContent>
+                    <app-contratar-servicios
+                        (contratar)="agregarServicio($event)"
+                        [serviciosContratados]="ListaserviciosContratados"
+                    ></app-contratar-servicios>
+                </ng-container>
+            </nz-modal>
+
+
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <button
+                nz-button
+                class="pull-right"
+                [nzType]="'primary'"
+                (click)="backClicked()"
+            >
+                <span>Regresar</span>
+            </button>
+        </div>
+    </div>
+    <hr>
+    <!--  -->
+    <div *ngIf="id==mesActual" class="row">
+        <!-- servicio 1 -->
+        <div
+            *ngFor="let servicio of serviciosMesActual"
+            class="col-md-4 mb-2 col-sm-6 col-12"
+        >
+            <!-- sin aprobar -->
+            <mat-card
+                *ngIf="(servicio.subido==null && servicio.periodo_pago=='1' && servicio.visualizar==null )  ||  (servicio.subido< 11 && servicio.periodo_pago=='1' && servicio.visualizar=='0' && servicio.mes_contratado<= 11)"
+                class="example-card"
+            >
+                <mat-card-header class="mat-card-header-1">
+                    <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                    <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                    <mat-card-title class="fuente">
+                        Precio: $.{{servicio.price}}
+                        <br>
+                        Estado:
+                        <strong>Sin Pagar</strong>
+                        <br>
+                        Horas total del servicio : {{servicio.hours_service}}
+                        <br>
+                        <p *ngIf="bloqueadorInicioMes==true">Debe realizar el pago!</p>
+                    </mat-card-title>
+                </mat-card-header>
+
+
+
+
+                <br>
+                <nz-collapse>
+                    <nz-collapse-panel
+                        *ngFor="let panel of panels"
+                        [nzHeader]="panel.name"
+                        [nzActive]="panel.active"
+                        [nzDisabled]="false"
+                    >
+                        <mat-card-actions>
+
+
+
+
+                            <div>
+                              <button
+                                        (click)="cambiarPeriodoPago(servicio.servicio_contratado_id)"
+                                        class=" mat-buttonn mb-3 btn btn-primary"
+                                        type="button"
+                                    >
+                                        Solicitar pago a fin de mes
+                                    </button>
+                                    <br>
+                                <div
+                                    *ngIf="previsualizacion && idImagen == servicio.id"
+                                    class="pt-3 imagen"
+                                >
+
+                                    <img
+                                        class="img"
+                                        [src]="previsualizacion"
+                                        alt="imagen"
+                                    >
+                                </div>
+                                <br>
+                                <div class>
+                                    <input
+                                        class="mb-3  form-control input-file"
+                                        (change)="getBase64($event)"
+                                        (change)="capturarFile($event, servicio.id)"
+                                        type="file"
+                                    >
+                                    <button
+                                        (click)="subirArchivo(servicio.servicio_contratado_id)"
+                                        [disabled]="fileExist == false"
+                                        class="mat-buttonn mb-3 btn btn-primary "
+                                        type="button"
+                                    >
+                                        Subir Imagen
+                                    </button>
+                                    <!-- <button mat-button class="mat-buttonn pl-4" (click)="subirArchivo()" (click)="pago=!pago"  [disabled]="fileExist==false" (click)="clearImage()"  >Subir Imagen</button> -->
+                                    <br>
+                                </div>
+                                <br>
+
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+                        </mat-card-actions>
+                    </nz-collapse-panel>
+                </nz-collapse>
+
+
+
+
+            </mat-card>
+
+
+            <!-- pendiente de aprobacion -->
+            <mat-card
+                *ngIf="servicio.documento && servicio.aprobado=='0' && servicio.subido==id  "
+
+                class="example-card"
+            >
+                <mat-card-header class="mat-card-header-2">
+                    <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                    <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                    <mat-card-title class="fuente">
+                        Precio: $.{{servicio.price}}
+                        <br>
+                        Estado:
+                        <strong>Pendiente de aprobación</strong>
+                        <br>
+                        Horas total del servicio : {{servicio.hours_service}}
+                        <br>
+                    </mat-card-title>
+                </mat-card-header>
+
+
+
+
+                <br>
+                <nz-collapse>
+                    <nz-collapse-panel
+                        *ngFor="let panel of panels"
+                        [nzHeader]="panel.name"
+                        [nzActive]="panel.active"
+                        [nzDisabled]="false"
+                    >
+                        <mat-card-actions>
+
+
+
+
+                            <div>
+                                <div class="row imagenContenedor ">
+                                    <div class="col-md-12 ">
+                                        <img
+                                            nz-image
+                                            width="100px"
+                                            class="imagen-pago text-center"
+                                            height="100px"
+                                            nzSrc="{{baseUrl}}/{{servicio.documento_ruta}}"
+                                            alt="{{servicio.id}}"
+                                        >
+
+
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+                        </mat-card-actions>
+                    </nz-collapse-panel>
+                </nz-collapse>
+
+
+
+
+            </mat-card>
+
+
+            <!-- aprobado -->
+            <mat-card
+                *ngIf="servicio.documento && servicio.aprobado=='1' && servicio.subido==id"
+                class="example-card"
+            >
+                <mat-card-header class="mat-card-header-3">
+                    <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                    <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                    <mat-card-title class="fuente">
+                        Precio: $.{{servicio.price}}
+                        <br>
+                        Estado:
+                        <strong>Aprobado</strong>
+                        <br>
+                        Horas total del servicio : {{servicio.hours_service}}
+                    </mat-card-title>
+                </mat-card-header>
+
+
+
+
+                <br>
+                <nz-collapse>
+                    <nz-collapse-panel
+                        *ngFor="let panel of panels"
+                        [nzHeader]="panel.name"
+                        [nzActive]="panel.active"
+                        [nzDisabled]="false"
+                        [nzDisabled]="(panel.disabled || bloqueadorInicioMes==true || bloqueadorFinMes==true||bloqueadorMesAnterior==true)"
+                    >
+                        <mat-card-actions>
+
+
+
+
+                            <div>
+
+
+                                <button
+                                    class="mat-buttonn mb-3 btn btn-primary "
+                                    routerLink="/gestiontareas/{{id}}/{{servicio.name}}/{{servicio.user_id}}/{{ servicio.id }}"
+                                    routerLinkActive="active"
+                                >
+                                    Gestion tickets
+                                </button>
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+                        </mat-card-actions>
+                    </nz-collapse-panel>
+                </nz-collapse>
+
+
+
+
+            </mat-card>
+
+            <!--pago a fin de mes-->
+            <mat-card
+                *ngIf="servicio.subido==null  && servicio.periodo_pago=='2' ||  (servicio.subido<id && servicio.periodo_pago=='2')"
+                class="example-card"
+            >
+                <mat-card-header class="mat-card-header-4">
+                    <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                    <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                    <mat-card-title class="fuente">
+                        Precio: $.{{servicio.price}}
+                        <br>
+                        Estado:
+                        <strong>Pago a fin de mes</strong>
+                        <br>
+                        Horas total del servicio : {{servicio.hours_service}}
+                    </mat-card-title>
+                </mat-card-header>
+
+
+
+
+                <br>
+                <nz-collapse>
+                    <nz-collapse-panel
+                        *ngFor="let panel of panels"
+                        [nzHeader]="panel.name"
+                        [nzActive]="panel.active"
+
+                        [nzDisabled]="(panel.disabled)"
+                    >
+                        <mat-card-actions>
+
+
+
+
+                            <div>
+
+                                <div
+                                    *ngIf="previsualizacion && idImagen == servicio.id"
+                                    class="pt-3 imagen"
+                                >
+
+                                    <img
+                                        class="img"
+                                        [src]="previsualizacion"
+                                        alt="imagen"
+                                    >
+                                </div>
+                                <br>
+                                <div class>
+                                    <input
+                                        class="mb-3  form-control input-file"
+                                        (change)="getBase64($event)"
+                                        (change)="capturarFile($event, servicio.id)"
+                                        type="file"
+                                    >
+                                    <button
+                                        (click)="subirArchivo(servicio.servicio_contratado_id)"
+                                        [disabled]="fileExist == false"
+                                        class="mat-buttonn mb-3 btn btn-primary "
+                                        type="button"
+                                    >
+                                        Subir Imagen
+                                    </button>
+                                    <!-- <button mat-button class="mat-buttonn pl-4" (click)="subirArchivo()" (click)="pago=!pago"  [disabled]="fileExist==false" (click)="clearImage()"  >Subir Imagen</button> -->
+                                    <br>
+                                </div>
+                                <br>
+
+
+
+                                <button
+                                    [disabled]='bloqueadorInicioMes==true || bloqueadorFinMes==true || bloqueadorMesAnterior==true'
+                                    class="mat-buttonn mb-3 btn btn-primary "
+                                    routerLink="/gestiontareas/{{id}}/{{servicio.name}}/{{servicio.user_id}}/{{ servicio.id }}"
+
+                                    routerLinkActive="active"
+                                >
+                                    Gestion tickets
+                                </button>
+
+
+                            </div>
+
+
+                        </mat-card-actions>
+                    </nz-collapse-panel>
+                </nz-collapse>
+
+
+
+
+            </mat-card>
+        </div>
+    </div>
+    <div *ngIf="id<mesActual" class="row">
+      <!-- servicio 1 -->
+      <div
+          *ngFor="let servicio of serviciosMesAnterior"
+          class="col-md-4 mb-2 col-sm-6 col-12"
+      >
+          <!-- sin aprobar -->
+          <mat-card
+          *ngIf="servicio.subido==null  && servicio.periodo_pago=='1' && id>=servicio.mes_contratado ||  (servicio.subido<id && servicio.periodo_pago=='1' && servicio.visualizar=='0' && id>=servicio.mes_contratado)"
+            class="example-card"
+          >
+              <mat-card-header class="mat-card-header-1">
+                  <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                  <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                  <mat-card-title class="fuente">
+                      Precio: $.{{servicio.price}}
+                      <br>
+                      Estado:
+                      <strong>Sin Pagar</strong>
+                      <br>
+                      Horas total del servicio : {{servicio.hours_service}}
+                      <br>
+                      <p *ngIf="bloqueadorInicioMes==true">Debe realizar el pago!</p>
+                  </mat-card-title>
+              </mat-card-header>
+
+
+
+
+              <br>
+              <nz-collapse>
+                  <nz-collapse-panel
+                      *ngFor="let panel of panels"
+                      [nzHeader]="panel.name"
+                      [nzActive]="panel.active"
+                      [nzDisabled]="false"
+                  >
+                      <mat-card-actions>
+
+
+
+
+                          <div>
+                            <button
+                                      (click)="cambiarPeriodoPago(servicio.servicio_contratado_id)"
+                                      class=" mat-buttonn mb-3 btn btn-primary"
+                                      type="button"
+                                  >
+                                      Solicitar pago a fin de mes
+                                  </button>
+                                  <br>
+                              <div
+                                  *ngIf="previsualizacion && idImagen == servicio.id"
+                                  class="pt-3 imagen"
+                              >
+
+                                  <img
+                                      class="img"
+                                      [src]="previsualizacion"
+                                      alt="imagen"
+                                  >
+                              </div>
+                              <br>
+                              <div class>
+                                  <input
+                                      class="mb-3  form-control input-file"
+                                      (change)="getBase64($event)"
+                                      (change)="capturarFile($event, servicio.id)"
+                                      type="file"
+                                  >
+                                  <button
+                                      (click)="subirArchivo(servicio.servicio_contratado_id)"
+                                      [disabled]="fileExist == false"
+                                      class="mat-buttonn mb-3 btn btn-primary "
+                                      type="button"
+                                  >
+                                      Subir Imagen
+                                  </button>
+                                  <!-- <button mat-button class="mat-buttonn pl-4" (click)="subirArchivo()" (click)="pago=!pago"  [disabled]="fileExist==false" (click)="clearImage()"  >Subir Imagen</button> -->
+                                  <br>
+                              </div>
+                              <br>
+
+
+
+
+
+
+                          </div>
+
+
+
+
+
+
+
+
+
+
+                      </mat-card-actions>
+                  </nz-collapse-panel>
+              </nz-collapse>
+
+
+
+
+          </mat-card>
+
+
+          <!-- pendiente de aprobacion -->
+          <mat-card
+              *ngIf="servicio.documento && servicio.aprobado=='0' && servicio.subido<=id && id>=servicio.mes_contratado"
+
+
+              class="example-card"
+          >
+              <mat-card-header class="mat-card-header-2">
+                  <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                  <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                  <mat-card-title class="fuente">
+                      Precio: $.{{servicio.price}}
+                      <br>
+                      Estado:
+                      <strong>Pendiente de aprobación</strong>
+                      <br>
+                      Horas total del servicio : {{servicio.hours_service}}
+                      <br>
+                  </mat-card-title>
+              </mat-card-header>
+
+
+
+
+              <br>
+              <nz-collapse>
+                  <nz-collapse-panel
+                      *ngFor="let panel of panels"
+                      [nzHeader]="panel.name"
+                      [nzActive]="panel.active"
+                      [nzDisabled]="false"
+                  >
+                      <mat-card-actions>
+
+
+
+
+                          <div>
+                              <div class="row imagenContenedor ">
+                                  <div class="col-md-12 ">
+                                      <img
+                                          nz-image
+                                          width="100px"
+                                          class="imagen-pago text-center"
+                                          height="100px"
+                                          nzSrc="{{baseUrl}}/{{servicio.documento_ruta}}"
+                                          alt="{{servicio.id}}"
+                                      >
+
+
+                                  </div>
+                              </div>
+
+
+
+
+
+
+                          </div>
+
+
+
+
+
+
+
+
+
+
+                      </mat-card-actions>
+                  </nz-collapse-panel>
+              </nz-collapse>
+
+
+
+
+          </mat-card>
+
+
+          <!-- aprobado -->
+          <mat-card
+              *ngIf="servicio.documento && servicio.aprobado=='1' && servicio.subido==id && id>=servicio.mes_contratado"
+              class="example-card"
+          >
+              <mat-card-header class="mat-card-header-3">
+                  <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                  <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                  <mat-card-title class="fuente">
+                      Precio: $.{{servicio.price}}
+                      <br>
+                      Estado:
+                      <strong>Aprobado</strong>
+                      <br>
+                      Horas total del servicio : {{servicio.hours_service}}
+                  </mat-card-title>
+              </mat-card-header>
+
+
+
+
+              <br>
+              <nz-collapse>
+                  <nz-collapse-panel
+                      *ngFor="let panel of panels"
+                      [nzHeader]="panel.name"
+                      [nzActive]="panel.active"
+                      [nzDisabled]="false"
+                      [nzDisabled]="(panel.disabled || bloqueadorInicioMes==true || bloqueadorFinMes==true || bloqueadorMesAnterior==true)"
+                  >
+                      <mat-card-actions>
+
+
+
+
+                          <div>
+
+
+                              <button
+                                  class="mat-buttonn mb-3 btn btn-primary "
+                                  routerLink="/gestiontareas/{{id}}/{{servicio.name}}/{{servicio.user_id}}/{{ servicio.id }}"
+                                  routerLinkActive="active"
+                              >
+                                  Gestion tickets
+                              </button>
+
+
+                          </div>
+
+
+
+
+
+
+
+
+
+
+                      </mat-card-actions>
+                  </nz-collapse-panel>
+              </nz-collapse>
+
+
+
+
+          </mat-card>
+
+          <!--pago a fin de mes-->
+          <mat-card
+          *ngIf="servicio.subido==null  && servicio.periodo_pago=='2' && id>=servicio.mes_contratado ||  (servicio.subido<id && servicio.periodo_pago=='2' && servicio.visualizar=='0' && id>=servicio.mes_contratado)"
+            class="example-card"
+          >
+              <mat-card-header class="mat-card-header-4">
+                  <mat-card-title class="titulo1">{{ servicio.servicio_id }}</mat-card-title>
+                  <mat-card-title class="titulo2">{{ servicio.name }}</mat-card-title>
+                  <mat-card-title class="fuente">
+                      Precio: $.{{servicio.price}}
+                      <br>
+                      Estado:
+                      <strong>Pago a fin de mes</strong>
+                      <br>
+                      Horas total del servicio : {{servicio.hours_service}}
+                  </mat-card-title>
+              </mat-card-header>
+
+
+
+
+              <br>
+              <nz-collapse>
+                  <nz-collapse-panel
+                      *ngFor="let panel of panels"
+                      [nzHeader]="panel.name"
+                      [nzActive]="panel.active"
+
+                      [nzDisabled]="(panel.disabled)"
+                  >
+                      <mat-card-actions>
+
+
+
+
+                          <div>
+
+                              <div
+                                  *ngIf="previsualizacion && idImagen == servicio.id"
+                                  class="pt-3 imagen"
+                              >
+
+                                  <img
+                                      class="img"
+                                      [src]="previsualizacion"
+                                      alt="imagen"
+                                  >
+                              </div>
+                              <br>
+                              <div class>
+                                  <input
+                                      class="mb-3  form-control input-file"
+                                      (change)="getBase64($event)"
+                                      (change)="capturarFile($event, servicio.id)"
+                                      type="file"
+                                  >
+                                  <button
+                                      (click)="subirArchivo(servicio.servicio_contratado_id)"
+                                      [disabled]="fileExist == false"
+                                      class="mat-buttonn mb-3 btn btn-primary "
+                                      type="button"
+                                  >
+                                      Subir Imagen
+                                  </button>
+                                  <!-- <button mat-button class="mat-buttonn pl-4" (click)="subirArchivo()" (click)="pago=!pago"  [disabled]="fileExist==false" (click)="clearImage()"  >Subir Imagen</button> -->
+                                  <br>
+                              </div>
+                              <br>
+
+
+
+                              <button
+                                  [disabled]='bloqueadorInicioMes==true || bloqueadorFinMes==true || bloqueadorMesAnterior==true'
+                                  class="mat-buttonn mb-3 btn btn-primary "
+                                  routerLink="/gestiontareas/{{id}}/{{servicio.name}}/{{servicio.user_id}}/{{ servicio.id }}"
+
+                                  routerLinkActive="active"
+                              >
+                                  Gestion tickets
+                              </button>
+
+
+                          </div>
+
+
+                      </mat-card-actions>
+                  </nz-collapse-panel>
+              </nz-collapse>
+
+
+
+
+          </mat-card>
+      </div>
+  </div>
+</div>

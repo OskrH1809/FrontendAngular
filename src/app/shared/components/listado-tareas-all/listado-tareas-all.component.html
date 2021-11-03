@@ -1,0 +1,128 @@
+<div class="container-fluid">
+  <h2 *ngIf="radioValue=='4'" class=" text-center pt-3">Listado de tareas <span  style="color: red;" >creadas</span></h2>
+  <h2 *ngIf="radioValue=='5'" class=" text-center pt-3">Listado de tareas <span  style="color: rgb(251, 102, 9);" >en revisión</span></h2>
+  <h2 *ngIf="radioValue=='6'" class=" text-center pt-3">Listado de tareas <span  style="color: #1b5b9b;" >finalizadas</span></h2>
+
+  <div class="row">
+    <div class="col-md-3 col-sm-12 espacio" >
+      <h5>Seleccionar Estado</h5>
+
+      <nz-radio-group [(ngModel)]="radioValue"  (ngModelChange)="filtro($event)" >
+      <label nz-radio  style="color: red;" nzValue="1" >Creado</label>
+      <label nz-radio style="color: rgb(251, 102, 9);" nzValue="2">En revisión</label>
+      <label nz-radio style="color: #1b5b9b;" nzValue="3">Finalizado</label>
+
+    </nz-radio-group>
+    </div>
+    <div class="col-md-9 col-sm-12">
+      <!-- <button nz-button nzType="primary">Add</button> -->
+  <br />
+  <br />
+  <nz-table #editRowTable nzBordered [nzData]="listOfData">
+    <thead>
+      <tr>
+        <th nzWidth="5%">Id</th>
+        <th nzWidth="10%">Usuario</th>
+        <th>Servicio</th>
+        <th>Tiempo restante de servicio</th>
+        <th>Titulo</th>
+        <th nzWidth="10%">Tiempo tarea</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody >
+      <tr *ngFor="let data of editRowTable.data"  class="editable-row">
+        <td class="text-center" *ngIf="data.id">
+          <nz-badge  nz-tooltip nzTooltipTitle="Presiona para ver mas información, Hay {{data.mensajesNuevosUser}} comentarios sin leer" [nzCount]="data.mensajesNuevosUser"  (click)="verComentario(data.id,data.idUsuario)" >
+
+            <a  class="head-example">{{data.id}}</a>
+
+          </nz-badge>
+
+        </td>
+        <td>{{ data.usuario }}</td>
+        <td>{{ data.servicio }}</td>
+        <td>{{ data.tiempo_restante_servicio }}</td>
+        <td>{{ data.titulo }}</td>
+        <td><div
+          class="editable-cell"
+          [hidden]="editId === data.id"
+          class="text-center"
+          (click)="startEdit(data.id)"
+      >
+          {{ data.tiempo }}
+       </div>
+      <input
+          [hidden]="editId !== data.id"
+          type="text"
+          class="text-center"
+          nz-input
+          [(ngModel)]="data.tiempo"
+          (blur)="stopEdit(data.id,data.tiempo)"
+      ></td>
+
+
+         <td class="text-center">
+
+         <br>
+         <a>
+            <span
+                (click)="showModal(data.id)"
+                nz-tooltip
+                nzTooltipTitle="Editar estado servicio {{data.servicio}}, Estado actual: {{data.estado}}"
+            >
+                <i
+                    *ngIf="data.idEstado==1"
+                    nz-icon
+                    nzType="edit"
+                    style="font-size: 25px; color: red;"
+                    nzTheme="outline"
+                ></i>
+                <i
+                    *ngIf="data.idEstado==2"
+                    nz-icon
+                    nzType="edit"
+                    style="font-size: 25px; color: rgb(251, 102, 9);"
+                    nzTheme="outline"
+                ></i>
+                <i
+                    *ngIf="data.idEstado==3"
+                    nz-icon
+                    nzType="edit"
+                    style="font-size: 25px; color: #3d9efe"
+                    nzTheme="outline"
+                ></i>
+
+            </span>
+        </a>
+        <!-- <button nz-button [nzType]="'primary'" ><span>Show Modal</span></button> -->
+
+        </td>
+      </tr>
+    </tbody>
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Actualizar Estado" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+      <ng-container *nzModalContent>
+
+      <!--select-->
+      <br>
+      <nz-select
+          [(ngModel)]="selectedValue"
+          (ngModelChange)="log($event)"
+          nzAllowClear
+          nzPlaceHolder="Seleccionar estado"
+      >
+          <nz-option
+              *ngFor="let option of optionList"
+              [nzValue]="option"
+              [nzSize]="small"
+              [nzLabel]="option.label"
+          ></nz-option>
+      </nz-select>
+
+
+      </ng-container>
+    </nz-modal>
+  </nz-table>
+
+    </div>
+</div>

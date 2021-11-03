@@ -1,0 +1,196 @@
+<div class="container espacio">
+    <h1 class="text-center  pt-5">
+        <strong>Gestión de Clientes</strong>
+    </h1>
+    <div class="row">
+      <div class="col-md-6 col-sm-12"></div>
+      <div class="col-md-6 col-sm-12">
+          <button
+              nz-button
+              class="pull-right"
+              [nzType]="'primary'"
+              (click)="backClicked()"
+          >
+              <span>Regresar</span>
+          </button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-3 col-sm-12 pt-5">
+            <h3>Registrar nuevo cliente</h3>
+            <form
+                [formGroup]="form"
+                (submit)="send()"
+            >
+
+                <div>
+
+                    <label
+                        class="pt-4"
+                        for="email"
+                    >
+                        Correo
+                    </label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        id="email"
+                        formControlName="email"
+                    >
+                </div>
+
+                <br>
+
+                <div>
+                    <button
+                        class=" mb-5  btn btn-primary"
+                        [disabled]="form.invalid"
+                    >
+                        Registrar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-9 pl-5 col-sm-12 pt-5">
+            <!-- <button nz-button  (click)="triggerModal(modalData)" nzType="primary">Registrar Cliente</button> -->
+            <!-- {# (click)="addRow()" #} -->
+            <br>
+            <br>
+            <nz-table
+                #editRowTable
+                class="mb-3"
+                nzBordered
+                [nzData]="listOfData"
+            >
+                <thead>
+                    <tr>
+                        <th nzWidth="5%">Id</th>
+                        <th nzWidth="20%">Correo</th>
+                        <th nzWidth="10%">Servicios de cliente</th>
+                        <th
+                            class="text-center"
+                            nzWidth="15%"
+                        >
+                            Activar/Desactivar
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let data of editRowTable.data"
+                        class="editable-row"
+                    >
+                        <td>{{data.id}}</td>
+                        <td>{{ data.email }}</td>
+                        <td class="text-center">
+                            <a
+                                routerLink="/listado/{{data.id}}/1"
+                                routerLinkActive="true"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Ver servicios de {{data.email}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: #08c;"
+                                        nz-icon
+                                        nzType="eye"
+                                        nzTheme="outline"
+                                    ></i>
+                                </span>
+                            </a>
+                        </td>
+
+                        <td class="text-center">
+                            &nbsp;
+                            <a
+                                *ngIf="data.activo=='1'"
+                                nz-popconfirm
+                                nzPopconfirmTitle="Seguro que desea desactivar a {{data.email}}?"
+                                (nzOnConfirm)="desactivarUsuario(data.id)"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Desactivar a {{data.email}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: rgb(30,150,210);"
+                                        nz-icon
+                                        nzType="check-circle"
+                                        nzTheme="outline"
+                                        [nzTwotoneColor]="red"
+                                    ></i>
+                                </span>
+                            </a>
+                            <!--  -->
+                            <a
+                                *ngIf="data.activo=='0'"
+                                nz-popconfirm
+                                nzPopconfirmTitle="Seguro que desea activar a {{data.email}}?"
+                                (nzOnConfirm)="activarUsuario(data.id)"
+                            >
+                                <span
+                                    nz-tooltip
+                                    nzTooltipTitle="Activar a {{data.email}}"
+                                >
+                                    <i
+                                        style="font-size: 25px; color: rgb(241, 12, 12);"
+                                        nz-icon
+                                        nzType="close-circle"
+                                        nzTheme="outline"
+                                        [nzTwotoneColor]="red"
+                                    ></i>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-template
+                    #modalData
+                    let-modal
+                >
+                    <div class="modal-header">
+                        <h4
+                            class="modal-title"
+                            id="modal-basic-title"
+                        >
+                            <strong>Nuevo Cliente</strong>
+                        </h4>
+                        <button
+                            type="button"
+                            class="close"
+                            aria-label="Close"
+                            (click)="modal.dismiss('Cross click')"
+                        >
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-10 col-sm-12"></div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            (click)="modal.close('Save click')"
+                            (click)="clearModal()"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </ng-template>
+            </nz-table>
+
+
+        </div>
+
+    </div>
+
+</div>

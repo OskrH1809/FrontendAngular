@@ -1,0 +1,148 @@
+
+
+.top{
+  padding-top: 5%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.conversacion2{
+  border-radius: 10px;
+  background: #eee;
+  text-align: center;
+  display: inline-block;
+  height:85vh;
+
+}
+.conversacion{
+
+  border-radius: 10px;
+  background: #eee;
+  text-align: center;
+  padding-top: 15px;
+  display: inline-block;
+}
+
+
+.usuario-emitter{
+  border-radius: 20px;
+  padding: 5px;
+  background: rgb(201, 198, 198);
+  float: right;
+  font-size: medium;
+  display: inline-block;
+  text-align: center;
+
+
+}
+
+.usuario-receiver{
+  border-radius: 20px;
+  padding: 5px;
+  text-align: center;
+  float:left ;
+  background: rgb(201, 198, 198);
+  font-size:medium;
+  display: inline-block;
+}
+
+
+.texto{
+  padding-top: 5%;
+  text-align:justify !important;
+  padding-left: 10px;
+  padding-right: 10px;
+
+}
+
+
+.mensaje{
+  border-radius: 20px;
+  padding: 3px;
+  padding-top: 5px;
+  float: left;
+  background: rgb(253, 251, 251);
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
+
+}
+
+
+.descripcion{
+color: black;
+}
+
+
+.documento{
+  width: 40%;
+
+}
+
+
+.estilo{
+  border: 1px solid rgb(54, 52, 52);
+  border-radius: 8px;
+  width: 90% !important;
+  background-color: rgb(240, 241, 243);
+}
+.letra{
+  color: black !important;
+}
+
+.estilo-boton:hover{
+  background-color: #3d9efe;
+  transition: 0.2s;
+  width:  100% !important;
+}
+
+.estilo-boton{
+  border: 0px;
+  color: black;
+  background-color: rgb(240, 241, 243);
+  transition: 0.2s;
+
+}
+
+
+.nzSearch{
+  width: 10%;
+}
+.container-fluid{
+
+}
+
+
+
+:host ::ng-deep .long-div {
+  height: 90%;
+  overflow: scroll;
+
+
+}
+
+:host ::ng-deep .long-div-inner {
+  height: 150%;
+}
+
+:host ::ng-deep .long-div .ant-back-top {
+  right: 150px;
+}
+
+:host ::ng-deep .long-div .ant-back-top-rtl {
+  right: unset;
+  left: 150px;
+}
+
+:host ::ng-deep strong {
+  color: rgba(64, 64, 64, 0.6);
+}
+
+
+.header{
+  padding: 10px;
+}
+
+.titulo{
+  text-align: left !important;
+}

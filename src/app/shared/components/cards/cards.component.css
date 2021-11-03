@@ -1,0 +1,104 @@
+.header-card{
+  background-color: #3d9efe;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  font-weight: 700;
+  color: black;
+
+
+  }
+
+
+  .custom-select{
+    font-size: 16px;
+  }
+
+  .container{
+    padding: 5px;
+
+  }
+  .sombreado{
+    box-shadow: 1px 1px 2px 3px #999;
+
+
+  }
+
+
+  .body-card{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  padding: 3px;
+  border: 1px solid rgb(197, 195, 195);
+  }
+
+
+  .mat-form-field + .mat-form-field {
+    margin-left: 8  px;
+  }
+
+.mat-card-header1{
+background-color: #3d9efe;
+padding: 13px;
+border-radius: 6px;
+
+padding-top: 5px;
+}
+
+.mat-card-header1:hover{
+  background-color: #1b5b9b;
+  transition: 0.2s;
+  }
+.mat-card-header2{
+  background-color: red;
+  padding: 13px;
+  border-radius: 6px;
+  padding-top: 5px;
+  }
+
+.mat-card-header3{
+    background-color: gray;
+    padding: 13px;
+    border-radius: 6px;
+    padding-top: 5px;
+  }
+
+.mat-card{
+  margin-top: 30px;
+}
+
+.titulo1{
+  font-size: 2rem;
+  padding-top: 5px;
+  color: black;
+}
+
+
+.mat-buttonn{
+  transition: 0.2s;
+
+}
+
+.mat-buttonn:hover{
+background-color: #3d9efe;
+transition: 0.2s;
+}
+
+
+.icons{
+  cursor: pointer;
+}
+
+.table-color{
+  background-color: #3d9efe;
+  color: white;
+}
+
+.esp{
+  padding-top:30px;
+}
+
+.letra{
+  color: black !important;
+}

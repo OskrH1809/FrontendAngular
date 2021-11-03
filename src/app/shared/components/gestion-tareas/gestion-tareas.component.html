@@ -1,0 +1,329 @@
+<div class="container espacio">
+  <h3 class="text-center  pt-5"><strong>Gestionar Tareas de <span style="color: #08c;"><strong>{{servicio}}</strong></span> </strong></h3>
+  <h6 class="text-center "> <strong><u>El servicio cuenta con <span style="color: rgb(255, 0, 0);" >{{tiempo_restante}}</span> horas disponibles</u></strong></h6>
+  <div class="row">
+    <div class="col-md-1   col-sm-12 pt-5"></div>
+    <div class="col-md-10 col-sm-12 pt-5">
+      <!--{# (click)="addRow()" #}-->
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <button nz-button [disabled]="idMes!=mesActual" (click)="triggerModal(modalData2)" nzType="primary">Ingresar Nueva Solicitud</button>
+
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <button nz-button class="pull-right" [nzType]="'primary'" (click)="backClicked()"><span>Regresar</span></button>
+
+        </div>
+      </div>
+
+      <hr>
+     <div class="row">
+       <div class="col-md-1 col-sm-12"></div>
+       <div class="col-md-10" >
+         <nz-table #editRowTable class="mb-3" nzBordered [nzData]="listOfData">
+          <thead>
+            <tr *ngIf="role=='ROLE_ADMIN'">
+              <th class="text-center" nzWidth="10%">Id</th>
+              <th class="text-center" nzWidth="20%" >Titulo</th>
+              <th class="text-center" nzWidth="10%">Tiempo en horas</th>
+              <th class="text-center" nzWidth="10%" class="text-center">Estado</th>
+            </tr>
+            <tr *ngIf="role=='ROLE_CLIENT'">
+              <th class="text-center" nzWidth="10%">Id</th>
+              <th class="text-center" nzWidth="20%" >Titulo</th>
+              <th class="text-center" nzWidth="20%">Tiempo en horas</th>
+              <th class="text-center" nzWidth="10%" class="text-center">Editar Tarea</th>
+              <th class="text-center" nzWidth="10%" class="text-center">Estado</th>
+
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of editRowTable.data"  class="editable-row">
+            <tr>
+              <td *ngIf="role=='ROLE_CLIENT'"  >
+                <nz-badge nz-tooltip nzTooltipTitle="Presiona para ver mas información, Hay {{data.mensajesNuevoAdmin}} comentarios sin leer" [nzCount]="data.mensajesNuevoAdmin" (click)="verComentario(data.id,data.idUsuario)">
+
+                  <a class="head-example">{{data.id}}</a>
+
+                </nz-badge>
+              </td>
+              <td *ngIf="role=='ROLE_ADMIN'"  >
+                <nz-badge nz-tooltip nzTooltipTitle="Presiona para ver mas información, Hay {{data.mensajesNuevosUser}} comentarios sin leer" [nzCount]="data.mensajesNuevosUser" (click)="verComentarioAdmin(data.id,data.idUsuario)">
+
+                  <a class="head-example">{{data.id}}</a>
+
+                </nz-badge>
+              </td>
+              <!-- si se encuentra en el mes -->
+              <td>
+
+                {{ data.titulo }}
+
+              </td>
+
+
+            <td class="text-center" *ngIf="role=='ROLE_CLIENT'" >
+
+              <p *ngIf="data.tiempo==null || data.tiempo==0">Aun no asignado</p>
+              <p *ngIf="data.tiempo!=null && data.tiempo!=0">{{data.tiempo}}</p>
+
+          </td>
+          <td *ngIf="role=='ROLE_ADMIN'"><div
+            class="editable-cell"
+            [hidden]="editId === data.id"
+            class="text-center"
+            (click)="startEdit(data.id)"
+        >
+            {{ data.tiempo }}
+         </div>
+        <input
+            [hidden]="editId !== data.id"
+            type="text"
+            class="text-center"
+            nz-input
+            [(ngModel)]="data.tiempo"
+            (blur)="stopEdit(data.id,data.tiempo)"
+        ></td>
+            <td style="background-color: rgb(236, 29, 29);" *ngIf="data.estado=='Creado' && role=='ROLE_ADMIN'" class="text-center">
+                  <a  *ngIf="mesActual==idMes && role=='ROLE_ADMIN'"> <span (click)="showModal(data.id)" nz-tooltip nzTooltipTitle="Cambiar Estado. Estado actual: {{data.estado}}"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+                  <a  *ngIf="mesActual!=idMes && role=='ROLE_ADMIN'"> <span   nz-tooltip nzTooltipTitle="Ya no puede editar el estado esta tarea"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+
+                  &nbsp;
+
+            </td>
+
+            <td style="background-color: rgb(247, 121, 19);" *ngIf="data.estado=='En revisión' && role=='ROLE_ADMIN'" class="text-center">
+              <a  *ngIf="mesActual==idMes && role=='ROLE_ADMIN'"> <span (click)="showModal(data.id)" nz-tooltip nzTooltipTitle="Cambiar Estado. Estado actual: {{data.estado}}"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+              <a  *ngIf="mesActual!=idMes && role=='ROLE_ADMIN'"> <span   nz-tooltip nzTooltipTitle="Ya no puede editar el estado esta tarea"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+
+              &nbsp;
+            </td>
+            <td style="background-color: #2993e9;" *ngIf="data.estado=='Finalizado' && role=='ROLE_ADMIN'" class="text-center">
+
+              <a  *ngIf="mesActual==idMes && role=='ROLE_ADMIN'"> <span (click)="showModal(data.id)" nz-tooltip nzTooltipTitle="Cambiar Estado. Estado actual: {{data.estado}}"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+              <a  *ngIf="mesActual!=idMes && role=='ROLE_ADMIN'"> <span   nz-tooltip nzTooltipTitle="Ya no puede editar el estado esta tarea"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+
+              &nbsp;
+            </td>
+
+            <td *ngIf="role=='ROLE_CLIENT'" class="text-center">
+              <a  *ngIf="mesActual==idMes && role=='ROLE_CLIENT'"> <span (click)="llenarDatos(data.id,data.titulo,data.descripcion)" (click)="showModalFormulario()" nz-tooltip nzTooltipTitle="Editar {{data.titulo}}"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+              <a  *ngIf="mesActual!=idMes && role=='ROLE_CLIENT'"> <span   nz-tooltip nzTooltipTitle="Ya no puede editar esta tarea"><i  nz-icon nzType="edit" nzTheme="outline"  style="font-size: 25px; color: rgb(0, 0, 0);"></i></span></a>
+
+              &nbsp;
+
+            </td>
+
+
+          <td  *ngIf="data.estado=='Creado' && role=='ROLE_CLIENT'" class="text-center">
+            <nz-progress [nzPercent]="33" nzType="circle" [nzWidth]="80"></nz-progress>
+
+
+
+          </td>
+
+          <td  *ngIf="data.estado=='En revisión' && role=='ROLE_CLIENT'" class="text-center">
+            <nz-progress [nzPercent]="66" nzType="circle" [nzWidth]="80"></nz-progress>
+           <!-- <P style="color: black;">{{data.estado}}</P>            &nbsp;-->
+          </td>
+          <td *ngIf="data.estado=='Finalizado' && role=='ROLE_CLIENT'" class="text-center">
+            <nz-progress [nzPercent]="100" nzType="circle" [nzWidth]="80"></nz-progress>
+
+
+          </td>
+            </tr>
+
+
+          </tbody>
+
+          <!-- edit -->
+          <ng-template  class="pull-left " #modalData2 let-modal2>
+            <div class="modal-body">
+              <h4 class="modal-title" id="modal-basic-title"><strong></strong></h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal2.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="container">
+                <div class="row ">
+                  <div class="col-md-12 col-sm-12 ">
+                    <!--  -->
+
+                    <form (ngSubmit)="onSubmit()" [formGroup]="demoReactiveForm">
+                      <h3>Nueva Tarea</h3>
+
+                      <div >
+                        <label for="titulo">Titulo</label>
+                        <input class="form-control titulo" formControlName="titulo" type="text" name="titulo" id="titulo">
+                      </div>
+
+                      <label class="pt-2" for="descripcion">Descripción</label>
+                      <ckeditor
+
+                        formControlName="descripcion"
+                        [editor]="Editor"
+                        id="descripcion2"
+                        class="ck-editor__editable_inline"
+                        name="descripcion">
+
+                      </ckeditor>
+                        <!-- file -->
+                        <div class="form-group">
+
+                          <label class="pt-4" for="file">Documento</label>
+
+                          <input
+
+                              formControlName="file"
+
+                              id="file"
+
+                              type="file"
+
+                              class="form-control titulo"
+                              (change)="getBase64($event)"
+                              (change)="onFileChange($event)">
+
+
+
+                      </div>
+                        <!-- end File -->
+                      <!-- <p *ngIf="description && description.dirty" class="alert">Description is "dirty".</p>
+                      <p *ngIf="description && description.touched" class="alert">Description has been "touched".</p> -->
+
+                      <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                          <div class="row">
+                            <div class="col-md-6 pull-right col-sm-12">
+                              <p><button class="btn btn-primary" type="submit"  >Enviar</button> </p>
+
+                            </div>
+                            <div class="col-md-6 pull-left col-sm-12">
+                              <p><button class="btn btn-primary" type="reset" (click)="reset2()">Limpiar</button></p>
+
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </form>
+
+
+                    <!--  -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer ">
+              <button type="button" class="btn btn-danger" (click)="modal2.close('Save click')">Cerrar</button>
+            </div>
+          </ng-template>
+          <!-- edit end -->
+            <!-- modal formulario -->
+         <nz-modal nzWidth="80%" nzheight="20%"  [(nzVisible)]="isVisibleFormulario" nzTitle="" (nzOnCancel)="handleCancelFormulario()" (nzOnOk)="handleOkFormulario()">
+          <ng-container *nzModalContent>
+            <form (ngSubmit)="onSubmit2()" [formGroup]="demoReactiveForm2">
+              <h3>Editar Tarea</h3>
+
+              <div >
+                <label for="titulo">Titulo</label>
+                <input class="form-control titulo" formControlName="titulo" type="text" name="titulo" id="titulo">
+              </div>
+
+              <label class="pt-2" for="descripcion2">Descripción</label>
+              <ckeditor
+
+                formControlName="descripcion2"
+                [editor]="Editor"
+                id="descripcion2"
+                class="ck-editor__editable_inline"
+                name="descripcion2">
+
+              </ckeditor>
+                <!-- file -->
+                <div class="form-group">
+
+                  <label class="pt-4" for="file">Documento</label>
+
+                  <input
+
+                      formControlName="file"
+
+                      id="file"
+
+                      type="file"
+
+                      class="form-control titulo"
+                      (change)="getBase64($event)"
+                      (change)="onFileChange2($event)">
+
+
+
+              </div>
+                <!-- end File -->
+              <!-- <p *ngIf="description && description.dirty" class="alert">Description is "dirty".</p>
+              <p *ngIf="description && description.touched" class="alert">Description has been "touched".</p> -->
+
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="row">
+                    <div class="col-md-6 pull-right col-sm-12">
+                      <p><button class="btn btn-primary" type="submit"  >Enviar</button> </p>
+
+                    </div>
+                    <div class="col-md-6 pull-left col-sm-12">
+
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </form>
+          </ng-container>
+          </nz-modal>
+         <!-- modal formulario end -->
+
+
+              <!-- modal para cambiar el estado -->
+              <nz-modal
+              [(nzVisible)]="isVisible"
+              nzTitle="Seleccione el nuevo estado de la tarea"
+              (nzOnCancel)="handleCancel()"
+              (nzOnOk)="handleOk()"
+          >
+              <ng-container *nzModalContent>
+                  <!-- select -->
+                  <!-- <p>The selected option's age is {{ selectedValue?.age }}</p> -->
+                  <br>
+                  <nz-select
+                      [(ngModel)]="selectedValue"
+                      (ngModelChange)="log($event)"
+                      nzAllowClear
+                      nzPlaceHolder="Seleccionar estado"
+                  >
+                      <nz-option
+                          *ngFor="let option of optionList"
+                          [nzValue]="option"
+                          [nzSize]="small"
+                          [nzLabel]="option.label"
+                      ></nz-option>
+                  </nz-select>
+                  <!-- select end -->
+              </ng-container>
+          </nz-modal>
+          </nz-table>
+       </div>
+       <div class="col-md-1 col-sm-12"></div>
+     </div>
+
+    </div>
+    <div class="col-md-1   col-sm-12 pt-5"></div>
+
+
+</div>
+
+

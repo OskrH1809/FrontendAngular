@@ -1,0 +1,71 @@
+<div class="container espacio">
+  <h1 class="text-center pt-5 mb-5"><strong>Registrar usuario</strong></h1>
+<div class="row">
+
+  <div class="col-md-1"></div>
+  <div class="col-md-10" align="center">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Correo electrónico </nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+          <input nz-input formControlName="email" placeholder="Correo electrónico" type="email" />
+          <ng-template #emailErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('email')">
+              El correo ingresado no es valido
+            </ng-container>
+            <ng-container *ngIf="control.hasError('required')">
+              Por favor ingrese su Correo electrónico.
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Contraseña</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Ingrese su Contraseña">
+          <input nz-input type="password" formControlName="password" placeholder="Contraseña" (ngModelChange)="validateConfirmPassword()" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Confirmar Contraseña</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+          <input nz-input type="password" formControlName="confirm" placeholder="Confirme su Contraseña" />
+          <ng-template #passwordErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Por favor confirme su contraseña
+            </ng-container>
+            <ng-container *ngIf="control.hasError('confirm')">
+              Contraseñas distintas.
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item *ngIf="role=='ROLE_ADMIN' && role!=null">
+        <nz-form-label [nzSpan]="7" nzFor="" nzRequired>Tipo Usuario</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="seleccionar tipo de usuario">
+          <nz-select
+            id="tipoUsuario"
+            formControlName="tipoUsuario"
+            nzPlaceHolder="seleccionar tipo de usuario"
+
+          >
+            <nz-option nzValue="ROLE_ADMIN" nzLabel="ADMIN"></nz-option>
+            <nz-option nzValue="ROLE_CLIENT" nzLabel="CLIENT"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button nz-button nzType="primary" [disabled]="!validateForm.valid">Registrarse</button>
+          <button nz-button (click)="resetForm($event)">Limpiar </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+</div>

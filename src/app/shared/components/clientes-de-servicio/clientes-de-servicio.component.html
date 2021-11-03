@@ -1,0 +1,16 @@
+<p>clientes-de-servicio works!</p>
+<div class="container espacio">
+  <h4 class=" text-center pt-5"><strong>Clientes que han solicitado el servicio de <span>{{nombreServicio}}</span></strong></h4>
+<!-- aqui -->
+<button class="btn btn-primary estilo-boton" pt-5 (click)="backClicked()">Regresar</button>
+
+  <div class="row ">
+
+    <!-- servicio 1 -->
+    <div *ngFor="let listado of listadoClientes; let i=index"  class="col-md-4 mb-5 col-sm-6 col-12 pt-4 ">
+      <div class="estilo">
+        <p class="text-center"><strong>{{listado.usuario}}</strong></p>
+      </div>
+    </div>
+  </div>
+</div>

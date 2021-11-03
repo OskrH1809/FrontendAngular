@@ -1,0 +1,15 @@
+<div class="container espacio">
+  <h1 class=" text-center"><strong>documentos</strong></h1>
+<!-- aqui -->
+<button class="btn btn-primary estilo-boton" pt-5 (click)="backClicked()">Regresar</button>
+
+  <div class="row ">
+
+    <!-- servicio 1 -->
+    <div *ngFor="let documento of documentos; let i=index"  class="col-md-4 mb-5 col-sm-6 col-12 pt-4 ">
+      <div class="estilo">
+        <a class="letra" href="{{documento.archivo}}"><img  class="documento"  src="assets/img/pdf.png"  alt="">Documento <span class="letra">{{i+1}}</span></a>
+      </div>
+    </div>
+  </div>
+</div>

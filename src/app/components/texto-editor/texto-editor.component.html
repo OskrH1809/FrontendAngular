@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <h1 class="text-center"><strong>Texto</strong></h1>
+      <div class="pt-1">
+        <ckeditor [editor]="Editor" (change)="onChange($event)"></ckeditor>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <h1 class="text-center"><strong>Subir Documento</strong></h1>
+     <div>
+      <input class="mb-3 form-control" (change)="capturarFile($event)" width="100px" type="file" >
+      <button (click)="subirArchivo()" [disabled]="fileExist==false"   class="mat-buttonn mb-3 btn btn-primary" type="button" >Subir Archivo</button>
+
+    </div>
+
+    </div>
+  </div>
+
+</div>

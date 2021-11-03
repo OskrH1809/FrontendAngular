@@ -1,0 +1,27 @@
+.documento{
+  width: 40%;
+
+}
+
+
+.estilo{
+  border: 1px solid rgb(54, 52, 52);
+  border-radius: 8px;
+  background-color: rgb(240, 241, 243);
+}
+.letra{
+  color: black !important;
+}
+
+.estilo-boton:hover{
+  background-color: #3d9efe;
+transition: 0.2s;
+}
+
+.estilo-boton{
+  border: 0px;
+  color: black;
+  background-color: rgb(240, 241, 243);
+  transition: 0.2s;
+
+}
