@@ -24,6 +24,7 @@ import { ClientesDeServicioComponent } from './shared/components/clientes-de-ser
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { ReportesComponent } from './shared/components/reportes/reportes.component';
 registerLocaleData(es);
 
 
@@ -36,6 +37,7 @@ registerLocaleData(es);
     FooterComponent,
     AsideComponent,
     ClientesDeServicioComponent,
+
 
 
 

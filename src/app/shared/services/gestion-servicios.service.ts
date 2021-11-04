@@ -14,6 +14,9 @@ export class GestionServiciosService {
     return this.http.get(`${baseUrl}/api/services`);
   }
 
+  get_reporte(id): Observable<any>{
+    return this.http.get(`${baseUrl}/api/reporte/${id}`);
+  }
 
   sendPost(data: any): Observable<any> {
     return this.http.post<any>(`${baseUrl}/api/services`, data);

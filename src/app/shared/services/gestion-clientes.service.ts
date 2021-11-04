@@ -18,6 +18,9 @@ export class GestionClientesService {
     return this.http.get(`${baseUrlF}/api/users`);
   }
 
+  usuariosAll(): Observable<any>{
+    return this.http.get(`${baseUrlF}/api/usuarios_select`);
+  }
   get_data_this_user(){
     return this.http.get(`${baseUrlF}/api/data_this_user`);
   }

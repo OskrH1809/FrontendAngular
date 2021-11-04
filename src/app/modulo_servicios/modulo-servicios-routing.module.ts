@@ -12,6 +12,7 @@ import { RolesGuard } from '../auth/services/role-admin.guard';
 import { ListadoTareasAllComponent } from '../shared/components/listado-tareas-all/listado-tareas-all.component';
 import { ConversacionesComponent } from '../shared/components/conversaciones/conversaciones.component';
 import { ListadoServiciosContradadosAllComponent } from '../shared/components/listado-servicios-contradados-all/listado-servicios-contradados-all.component';
+import { ReportesComponent } from '../shared/components/reportes/reportes.component';
 
 const routes: Routes = [
   {path:'listado/:idUser/:id', component:ListadosSeComponent, canActivate: [AuthGuardGuard,RolesGuard],canLoad:[AuthGuardGuard,RolesGuard]},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path:'documentos/:tarea/:usuario', component:VistaDocumentosComponent},
   {path:'listado-tareas-all/:idEstado', component:ListadoTareasAllComponent, canActivate: [AuthGuardGuard,RolesGuard],canLoad:[AuthGuardGuard]},
   {path:'conversacion/:idTarea/:idUsuario', component:ConversacionesComponent, canActivate: [AuthGuardGuard],canLoad:[AuthGuardGuard]},
+  {path:'reportes', component:ReportesComponent, canActivate: [AuthGuardGuard],canLoad:[AuthGuardGuard]},
 
 
 ];

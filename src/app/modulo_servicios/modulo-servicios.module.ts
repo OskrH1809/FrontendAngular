@@ -28,6 +28,7 @@ import { ConversacionesComponent } from '../shared/components/conversaciones/con
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { ListadoServiciosContradadosAllComponent } from '../shared/components/listado-servicios-contradados-all/listado-servicios-contradados-all.component';
+import { ReportesComponent } from '../shared/components/reportes/reportes.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ListadoServiciosContradadosAllComponent } from '../shared/components/li
     ListadoTareasAllComponent,
     ListadoServiciosContradadosAllComponent,
     ConversacionesComponent,
+    ReportesComponent,
 
   ],
   imports: [
