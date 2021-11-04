@@ -21,6 +21,19 @@
         <li><a href="/panel">Panel</a></li>
         <li><a href="/gestionservicios"> Gestión Servicios</a></li>
         <li> <a href="/gestionclientes">Gestión Clientes</a> </li>
+        <li> <a href="/gestionclientes">
+          <span
+          nz-tooltip
+          nzTooltipTitle="Reportes"
+      >
+          <i
+              nz-icon
+              nzType="file-pdf"
+              style="font-size: 25px; color: #3d9efe"
+              nzTheme="outline"
+          ></i>
+
+      </span></a> </li>
         <!-- <li class="menu-active"><a href="">Login</a></li> -->
 
         <li class="pl-5">
@@ -31,9 +44,9 @@
           <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>
               <hr>
-              <li> <a style="color: black;" href="/perfil">{{username}}</a> </li>
+              <li> <a style="color: black; padding:15px;" href="/perfil">{{username}}</a> </li>
               <hr>
-              <li> <a style="color: black;" href="/registro">Registrar nuevo usuario</a> </li>
+              <li> <a style="color: black;  padding:15px;" href="/registro">Registrar nuevo usuario</a> </li>
               <hr>
               <li class="text-center"> <a style="color: black;" (click)="logout()">Cerrar sesión</a> </li>
                 <hr>
@@ -58,7 +71,7 @@
           <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu nzSelectable>
               <hr>
-              <li> <a style="color: black;" href="/perfil">{{username}}</a> </li>
+              <li> <a style="color: black; padding:15px;" href="/perfil">{{username}}</a> </li>
               <hr>
               <li class="text-center"> <a style="color: black;" (click)="logout()">Cerrar sesión</a> </li>
                 <hr>

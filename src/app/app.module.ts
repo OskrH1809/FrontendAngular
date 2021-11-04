@@ -23,6 +23,7 @@ import { GestionUsuariosService } from './auth/services/gestion-usuarios.service
 import { ClientesDeServicioComponent } from './shared/components/clientes-de-servicio/clientes-de-servicio.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 registerLocaleData(es);
 
 
@@ -35,6 +36,7 @@ registerLocaleData(es);
     FooterComponent,
     AsideComponent,
     ClientesDeServicioComponent,
+
 
 
 
@@ -52,7 +54,8 @@ registerLocaleData(es);
     ReactiveFormsModule,
     CKEditorModule,
     NzIconModule,
-    NzDropDownModule
+    NzDropDownModule,
+    NzToolTipModule
   ],
   exports:[
     ModuloServiciosModule
