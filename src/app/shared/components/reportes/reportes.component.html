@@ -22,17 +22,17 @@
   <hr>
   <!--  -->
   <div class="row">
-      <div class="col-md-6 mb-2 col-sm-6 col-12">
+      <div class="col-md-4 mb-2 col-sm-6 col-12 " width="100%">
 
 
         <button
               nz-button
-              class="aling-center"
+              class="pull-left"
               [nzType]="'primary'"
               (click)="showModal()"
           >
               <span>
-                Servicios totales contratados
+                Servicios totales contratados por cliente
                 <i
                 nz-icon
                 nzType="file-pdf"
@@ -64,52 +64,94 @@
           </button>
 
       </div>
-
-
-      <div class="col-md-6 mb-2 col-sm-6 col-12">
+      <div class="col-md-4 mb-2 col-sm-6 col-12" width="100%">
 
 
         <button
               nz-button
-              class="aling-center"
+              class="pull-right"
               [nzType]="'primary'"
-              (click)="showModal()"
+              (click)="serviciosMasContratados()"
+
           >
               <span>
-                Servicios totales contratados
+                Servicios mas contratados
                 <i
                 nz-icon
                 nzType="file-pdf"
                 style="font-size: 25px; color: red"
                 nzTheme="outline"
             ></i> </span>
-            <nz-modal [(nzVisible)]="isVisible" nzTitle="Actualizar Estado" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-              <ng-container *nzModalContent>
 
-              <!--select-->
-              <br>
-              <nz-select
-                  [(ngModel)]="selectedValue"
-                  (ngModelChange)="log($event)"
-                  nzAllowClear
-                  nzPlaceHolder="Seleccionar estado"
-              >
-                  <nz-option
-                      *ngFor="let option of optionList"
-                      [nzValue]="option"
-                      [nzSize]="small"
-                      [nzLabel]="option.label"
-                  ></nz-option>
-              </nz-select>
-
-
-              </ng-container>
-            </nz-modal>
           </button>
 
       </div>
+      <div class="col-md-4 mb-2 col-sm-6 col-12" width="100%">
+
+
+        <button
+              nz-button
+              class="pull-right"
+
+              [nzType]="'primary'"
+              width="100%"
+              (click)="serviciosMenosContratados()"
+
+          >
+              <span>
+                Servicios menos contratados
+                <i
+                nz-icon
+                nzType="file-pdf"
+                style="font-size: 25px; color: red"
+                nzTheme="outline"
+            ></i> </span>
+
+          </button>
+
+      </div>
+
+
+
+
+
+
+      <!-- <div class="col-md-6 mb-2 col-sm-6 col-12">
+
+
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your username!">
+              <nz-input-group nzPrefixIcon="user">
+                <input type="text" nz-input formControlName="userName" placeholder="Username" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Password!">
+              <nz-input-group nzPrefixIcon="lock">
+                <input type="password" nz-input formControlName="password" placeholder="Password" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <div nz-row class="login-form-margin">
+            <div nz-col [nzSpan]="12">
+              <label nz-checkbox formControlName="remember">
+                <span>Remember me</span>
+              </label>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <a class="login-form-forgot">Forgot password</a>
+            </div>
+          </div>
+          <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+          Or
+          <a>register now!</a>
+        </form>
+      </div> -->
 
 
   </div>
+
 
 </div>

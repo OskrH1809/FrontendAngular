@@ -29,7 +29,7 @@ import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { ListadoServiciosContradadosAllComponent } from '../shared/components/listado-servicios-contradados-all/listado-servicios-contradados-all.component';
 import { ReportesComponent } from '../shared/components/reportes/reportes.component';
-
+import { NzFormModule } from 'ng-zorro-antd/form';
 @NgModule({
   declarations: [
     ListadosSeComponent,
@@ -65,7 +65,8 @@ import { ReportesComponent } from '../shared/components/reportes/reportes.compon
     NzRadioModule,
     NzBadgeModule,
     NzBackTopModule,
-    NzProgressModule
+    NzProgressModule,
+    NzFormModule
 
   ],
   exports:[
