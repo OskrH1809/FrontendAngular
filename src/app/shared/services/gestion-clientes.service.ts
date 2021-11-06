@@ -22,6 +22,10 @@ export class GestionClientesService {
     return this.http.get(`${baseUrlF}/api/usuarios_select`);
   }
 
+  servicios_contratados_fechas(fecha1,fecha2): Observable<any>{
+    return this.http.get(`${baseUrlF}/api/servicios_contratados_fechas/${fecha1}/${fecha2}`);
+  }
+
   servicioMasContratado(): Observable<any>{
     return this.http.get(`${baseUrlF}/api/servicios_max`);
   }

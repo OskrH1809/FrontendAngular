@@ -4,6 +4,7 @@ import { GestionClientesService } from '../../services/gestion-clientes.service'
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { GestionServiciosService } from '../../services/gestion-servicios.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 @Component({
   selector: 'app-reportes',
   templateUrl: './reportes.component.html',
@@ -14,6 +15,8 @@ export class ReportesComponent implements OnInit {
   dataSelect: { id: any; estado: string; };
   usuarios;
   usuarioSeleccionado: { id: string; };
+  fecha_2: string;
+  fecha_1: string;
 
   constructor(
     private _location: Location,
@@ -94,6 +97,10 @@ export class ReportesComponent implements OnInit {
       this.createNotification('error', 'Error al cargar datos: ', err);                // si hay algun error mostrara una notificacion y el detalle del error
     })
   }
+
+
+
+
   createNotification(type1: string, type2: string, type3: string,): void {
     this.notification.create(
       type1,
@@ -122,11 +129,63 @@ export class ReportesComponent implements OnInit {
       }
     })
   }
+
+
+
+  servicios_contratados_fechas(){
+    this.gestionCliente.servicios_contratados_fechas(this.fecha_1,this.fecha_2).subscribe(respuesta => {
+      if (respuesta) {
+        console.log(respuesta)
+      }
+    })
+  }
   serviciosMenosContratados(){
     this.gestionCliente.servicioMenosContratado().subscribe(respuesta => {
       if (respuesta) {
         respuesta
       }
     })
+  }
+
+  onValueChange(value: Date): void {
+    console.log(`Current value: ${value}`);
+    this.fecha_1 = moment(value).format('YYYY-MM-DD');
+    console.log(this.fecha_1)
+
+  }
+
+  onPanelChange(change: { date: Date; mode: string }): void {
+    console.log(`Current value: ${change.date}`);
+    console.log(`Current mode: ${change.mode}`);
+  }
+  // calendario 2
+  onValueChange2(value2: Date): void {
+    console.log(`Current value: ${value2}`);
+    console.log(moment(value2).format('YYYY-MM-DD'))
+    this.fecha_2 = moment(value2).format('YYYY-MM-DD');
+  }
+
+  onPanelChange2(change2: { date2: Date; mode2: string }): void {
+    console.log(`Current value: ${change2.date2}`);
+    console.log(`Current mode: ${change2.mode2}`);
+  }
+  // reporte entre fechas
+
+  isVisible2 = false;
+
+
+
+  showModal2(): void {
+    this.isVisible2 = true;
+  }
+
+  handleOk2(): void {
+    console.log('Button ok clicked!');
+    this.isVisible2 = false;
+  }
+
+  handleCancel2(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible2 = false;
   }
 }

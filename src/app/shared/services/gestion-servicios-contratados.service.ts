@@ -44,6 +44,11 @@ export class GestionServiciosContratadosService {
     //
   }
 
+  getName(id): Observable<any> {
+    return this.http.get(`${baseUrlF}/api/get_name/${id}`);
+    //
+  }
+
   getServiciosContratadosSinAprobar(): Observable<any> {
     return this.http.get(`${baseUrlF}/api/sin_aprobar`);
     //

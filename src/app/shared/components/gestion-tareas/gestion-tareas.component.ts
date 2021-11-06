@@ -37,6 +37,7 @@ export class GestionTareasComponent implements OnInit {
   descripcion: any;
   public Editor = ClassicEditor;
   tiempo_restante: any;
+  nombreUsuario: any;
   public onChange({ editor }) {
     const data = editor.getData();
     console.log(data);
@@ -86,6 +87,7 @@ export class GestionTareasComponent implements OnInit {
   ngOnInit(): void {
     this.getTareas();
     this.getTiempo();
+    this.getName();
     this.id = this.route.snapshot.paramMap.get("id");
   }
 
@@ -259,6 +261,17 @@ export class GestionTareasComponent implements OnInit {
         console.log(respuesta);
 
         this.listOfData = respuesta;
+      }, err => {
+        console.log(err);
+        this.createNotification('error', 'Error al obtener las tareas: ', err);
+      })
+  }
+  getName() {
+    this.ServiciosContratados.getName(this.idUsuario).subscribe(
+      respuesta => {
+        console.log(respuesta);
+
+        this.nombreUsuario = respuesta['0'].email;
       }, err => {
         console.log(err);
         this.createNotification('error', 'Error al obtener las tareas: ', err);

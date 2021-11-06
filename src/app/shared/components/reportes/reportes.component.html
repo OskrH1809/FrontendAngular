@@ -22,12 +22,12 @@
   <hr>
   <!--  -->
   <div class="row">
-      <div class="col-md-4 mb-2 col-sm-6 col-12 " width="100%">
+      <div class="col-md-4 mb-2 col-sm-6 col-12  botones" >
 
 
         <button
               nz-button
-              class="pull-left"
+              style="width:100%; height:100%"
               [nzType]="'primary'"
               (click)="showModal()"
           >
@@ -64,12 +64,12 @@
           </button>
 
       </div>
-      <div class="col-md-4 mb-2 col-sm-6 col-12" width="100%">
+      <div class="col-md-4 mb-2 col-sm-6 col-12 botones" >
 
 
         <button
               nz-button
-              class="pull-right"
+              style="width:100%; height:100%"
               [nzType]="'primary'"
               (click)="serviciosMasContratados()"
 
@@ -86,12 +86,12 @@
           </button>
 
       </div>
-      <div class="col-md-4 mb-2 col-sm-6 col-12" width="100%">
+      <div class="col-md-4 mb-2 col-sm-6 col-12 botones" >
 
 
         <button
               nz-button
-              class="pull-right"
+              style="width:100%; height:100%"
 
               [nzType]="'primary'"
               width="100%"
@@ -109,6 +109,77 @@
 
           </button>
 
+      </div>
+      <div class="col-md-4 mb-2 col-sm-6 col-12 botones">
+
+        <button
+        nz-button
+        style="width:100%; height:100%"
+        class="float-center"
+        [nzType]="'primary'"
+        (click)="showModal2()"
+
+    >
+        <span>
+          Servicios contratados entre rango
+          <i
+          nz-icon
+          nzType="file-pdf"
+          style="font-size: 25px; color: red"
+          nzTheme="outline"
+      ></i> </span>
+
+        </button>
+
+
+        <nz-modal [(nzVisible)]="isVisible2" nzWidth="50%" nzTitle="Ingregar el rango de fechas" (nzOnCancel)="handleCancel2()" (nzOnOk)="handleOk2()">
+          <ng-container *nzModalContent>
+            <!-- caledario 1 -->
+            <div class="row pb-4">
+
+              <div class="col-md-6">
+                <p class="pt-5"><strong>Fecha Inicial</strong></p>
+                <div [ngStyle]="{ width: '300px', border: '1px solid #d9d9d9', borderRadius: '4px' }">
+                <nz-calendar
+                  [nzFullscreen]="false"
+                  (nzSelectChange)="onValueChange($event)"
+                  (nzPanelChange)="onPanelChange($event)"
+                ></nz-calendar>
+              </div></div>
+              <div class="col-md-6">
+                <!-- caledario 2 -->
+                <p class="pt-5"><strong>Fecha Final</strong></p>
+                <div [ngStyle]="{ width: '300px', border: '1px solid #d9d9d9', borderRadius: '4px' }">
+                  <nz-calendar
+                    [nzFullscreen]="false"
+                    (nzSelectChange)="onValueChange2($event)"
+                    (nzPanelChange)="onPanelChange2($event)"
+                  ></nz-calendar>
+                </div>
+                </div>
+            </div>
+            <button
+            nz-button
+            style="width:100%; height:100%;padding: 5px;"
+            class="float-center"
+            [nzType]="'primary'"
+            (click)="servicios_contratados_fechas()"
+
+        >
+            <span>
+              Solicitar Reporte
+              <i
+              nz-icon
+              nzType="file-pdf"
+              style="font-size: 25px; color: red"
+              nzTheme="outline"
+
+          ></i> </span>
+
+            </button>
+
+          </ng-container>
+        </nz-modal>
       </div>
 
 
