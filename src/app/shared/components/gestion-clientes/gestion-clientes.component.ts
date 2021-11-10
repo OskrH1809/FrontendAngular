@@ -57,7 +57,7 @@ export class GestionClientesComponent implements OnInit {
   //Funcion que hace un llamado a la api para obtener y visualizar los datos
   get_users() {
     this.userService.get_usersAll().subscribe(data => {
-      this.listOfData = data;
+      this.listOfData = data.filter(respuesta => respuesta.role == 'ROLE_CLIENT' );
       console.log(data);
     }, err => {
       console.log(err);

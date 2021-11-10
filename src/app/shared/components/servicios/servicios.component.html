@@ -401,6 +401,7 @@
     </div>
     <div *ngIf="id<mesActual" class="row">
       <!-- servicio 1 -->
+
       <div
           *ngFor="let servicio of serviciosMesAnterior"
           class="col-md-4 mb-2 col-sm-6 col-12"
@@ -589,7 +590,7 @@
 
           <!-- aprobado -->
           <mat-card
-              *ngIf="servicio.documento && servicio.aprobado=='1' && servicio.subido==id && id>=servicio.mes_contratado"
+              *ngIf="servicio.documento && servicio.aprobado=='1' && servicio.subido==id && servicio.mes_contratado>=id"
               class="example-card"
           >
               <mat-card-header class="mat-card-header-3">

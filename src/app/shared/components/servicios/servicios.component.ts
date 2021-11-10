@@ -110,6 +110,7 @@ export class ServiciosComponent implements OnInit {
         this.serviciosMesAnterior = respuesta.data.filter(respuesta => (respuesta.servicio_contratado_activo==1 && respuesta.servicio_activo==1 && respuesta.subido <= this.id || ( respuesta.servicio_contratado_activo==1 && respuesta.servicio_activo==1 && respuesta.subido == null) )  )
         console.log(parseInt(this.id))
         console.log(this.Servicios);
+        console.log(this.serviciosMesAnterior)
         console.log(this.serviciosMesActual);
         this.observadorPagoInicioMes(this.serviciosMesActual);
         this.observadorPagoFinMes(this.serviciosMesActual);
